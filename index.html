@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Users</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		(function(){
+
+			var update = function()
+			{
+				$.ajax('http://api.pogoprofile.com/overallstats').done(function(data)
+				{
+					var users = data.Response.TeamCounts.reduce(function(a, b) { return a + b; }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					$('#usercount').text(users);
+					setTimeout(update, 5000);
+				});
+			};
+			update();
+
+		})();
+	</script>
+	<style type="text/css">
+		h1 {
+			left: 0;
+			line-height: 200px;
+			margin: auto;
+			margin-top: -100px;
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			text-align: center;
+			font-size: 20em;
+			font-family: monospace;
+		}
+	</style>
+</head>
+<body>
+
+	<h1 id="usercount"></h1>
+
+</body>
+</html>
